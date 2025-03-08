@@ -8,7 +8,25 @@
 </head>
 <body>
     <h1>Welcome to our app</h1>
-    {{text}}
+    <p id="text">{{text}}</p>
+    <br>
     <a href="/login">Login here</a>
+
+    <script>
+        document.addEventListener('keydown', function(event) {
+            fetch('/key_press', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ key: event.key })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('text').textContent += data.key;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>
