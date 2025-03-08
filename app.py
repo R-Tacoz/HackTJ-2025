@@ -12,8 +12,11 @@ def login():
 
 @app.route('/key_press', methods=['POST'])
 def key_press():
+    alpha="abcdefghijklmnopqrstuvwxyz"
+    alpha+=alpha.upper()+" "
     key = request.json.get('key')
     response = {
+        'valid': key in alpha,
         'key': key
     }
     return jsonify(response)
