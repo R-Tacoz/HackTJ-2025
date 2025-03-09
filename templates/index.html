@@ -37,6 +37,13 @@
             })
             .catch(error => console.error('Error:', error));
         });
+
+        let counter = 0;
+        function updateCounter() {
+            counter++;
+            document.getElementById('timer').textContent = "Time: "+counter+"s";
+        }
+        setInterval(updateCounter, 1000);
     </script>
 </body>
 </html>
