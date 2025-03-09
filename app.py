@@ -30,6 +30,11 @@ def key_press():
     }
     return jsonify(response)
 
+@app.route('/store', methods=['POST'])
+def store():
+    strokedata=request.json.get('data')
+    print(strokedata)
+
 @app.route('/results')
 def results():
     return render_template('results.html')

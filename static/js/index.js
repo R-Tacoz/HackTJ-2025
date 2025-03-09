@@ -15,7 +15,8 @@ document.addEventListener('keydown', function(event) {
             curText+=data.key;
         } else if (data.key=="Enter") {
             clearInterval();
-            window.location.href="/results";
+            exportData();
+            // window.location.href="/results";
         }
         document.getElementById('text-input').textContent = curText;
     })
@@ -36,49 +37,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("keydown", (event) => {
         let pressTime = performance.now();
-
-        // Store the key press data
-        let entry = {
-            key: event.key,
-            pressTime: pressTime,
-            event: "press",
-            flightTime: lastKeyTime ? pressTime - lastKeyTime : null
-        };
-        keystrokeData.push(entry);
-
-        // Track inter-key latency
         if (lastKey) {
             keystrokeData.push({
-                keyPair: `${lastKey} → ${event.key}`,
-                interKeyLatency: pressTime - lastKeyTime
+                time: pressTime - lastKeyTime
             });
         }
-
         lastKey = event.key;
         lastKeyTime = pressTime;
     });
 
     document.addEventListener("keyup", (event) => {
         let releaseTime = performance.now();
-
-        // Find the corresponding press event and calculate dwell time
-        for (let data of keystrokeData) {
-            if (data.key === event.key && data.event === "press" && !data.dwellTime) {
-                data.dwellTime = releaseTime - data.pressTime;
-                break;
-            }
-        }
-    });
-
-    // Function to export collected data (modify as needed)
-    function exportData() {
-        console.log("Keystroke Data:", keystrokeData);
-        // Send this data securely to your server for analysis if needed
-    }
-
-    // Example: Export data when form is submitted
-    document.querySelector("form")?.addEventListener("submit", (event) => {
-        event.preventDefault();
-        exportData();
+        keystrokeData.push({
+            time: releaseTime - lastKeyTime,
+            key: event.key
+        });
     });
 });
+
+
+function exportData() {
+    console.log("here");
+    const response = fetch("/store", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({data: keystrokeData}),
+    })
+    console.log("here");
+    return response.json();
+}
