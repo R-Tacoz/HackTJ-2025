@@ -1,26 +1,58 @@
+let keystrokeData = [];
+let currentKeyStartTime = null;
+let currentKey = null;
+let lastKeyStartTime = null;
+let lastKey = null;
+
 document.addEventListener('keydown', function(event) {
-    fetch('/key_press', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ key: event.key })
-    })
-    .then(response => response.json())
-    .then(data => {
-        let curText=document.getElementById('text-input').textContent;
-        if (data.key=="Backspace") {
-            curText=curText.substring(0, curText.length-1);
-        } else if (data.valid==true) {
-            curText+=data.key;
-        } else if (data.key=="Enter") {
-            clearInterval();
-            exportData();
-            // window.location.href="/results";
+
+    let key = event.key;
+    let keyIsValid = /^[a-zA-Z ]$/.test(key);
+    let textBoxText = document.getElementById('text-input').textContent;
+
+    if (keyIsValid) {
+        textBoxText += key;
+
+        let pressTime = performance.now();
+
+        // begin key hold
+        currentKey = key;
+        currentKeyStartTime = pressTime;
+
+        // end key pair elapsed
+        if (lastKey) {
+            keystrokeData.push({
+                key_pair: lastKey + key,
+                elapsed_time: pressTime - lastKeyStartTime
+            });
         }
-        document.getElementById('text-input').textContent = curText;
-    })
-    .catch(error => console.error('Error:', error));
+
+        // begin key pair elapsed
+        lastKey = key;
+        lastKeyStartTime = pressTime;
+    }
+    else if (key == "Backspace") {
+        textBoxText=textBoxText.substring(0, textBoxText.length-1);
+    }
+    else if (key == "Enter") {
+        clearInterval();
+        exportData();
+        window.location.href = "/results";
+
+    }
+    
+    document.getElementById('text-input').textContent = textBoxText;
+});
+
+document.addEventListener("keyup", (event) => {
+    let releaseTime = performance.now();
+    key = event.key;
+
+    // end key hold
+    keystrokeData.push({
+        held_key: currentKey,
+        dwell_time: releaseTime - currentKeyStartTime
+    });
 });
 
 let counter = 0;
@@ -30,34 +62,9 @@ function updateCounter() {
 }
 setInterval(updateCounter, 1000);
 
-document.addEventListener("DOMContentLoaded", () => {
-    let keystrokeData = [];
-    let lastKeyTime = null;
-    let lastKey = null;
-
-    document.addEventListener("keydown", (event) => {
-        let pressTime = performance.now();
-        if (lastKey) {
-            keystrokeData.push({
-                time: pressTime - lastKeyTime
-            });
-        }
-        lastKey = event.key;
-        lastKeyTime = pressTime;
-    });
-
-    document.addEventListener("keyup", (event) => {
-        let releaseTime = performance.now();
-        keystrokeData.push({
-            time: releaseTime - lastKeyTime,
-            key: event.key
-        });
-    });
-});
-
-
 function exportData() {
-    console.log("here");
+    keystrokeData.push({username: })
+
     const response = fetch("/store", {
         method: "POST",
         headers: {
@@ -66,5 +73,4 @@ function exportData() {
         body: JSON.stringify({data: keystrokeData}),
     })
     console.log("here");
-    return response.json();
 }

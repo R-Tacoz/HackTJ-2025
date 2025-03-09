@@ -6,6 +6,10 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader
 
+def createFeatureVec(response):
+    
+    return []
+
 class KeyMetAADataset(torch.utils.data.Dataset):
     def __init__(self, user, path="./processing/data/keystrokesdata.csv"):
         self.user = user
