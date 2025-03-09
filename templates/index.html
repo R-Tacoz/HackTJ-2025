@@ -17,7 +17,13 @@
         <br>
 
         <div class="login-box">
-            <p><a href="/login">Login</a></p>
+            <p>
+                {% if username %}
+                    <a href={{"/profile/"+username}}>Profile</a>
+                {% else %}
+                    <a href="/login">Login</a>
+                {% endif %}
+            </p>
         </div>
     </div>
 
