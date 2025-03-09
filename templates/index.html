@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Welcome to our app</h1>
-    <p id="text">{{text}}</p>
-    <br>
-    <a href="/login">Login here</a>
+    <div class="container">
+        <h1>Typing Authentication</h1>
+        <div class="typing-box">
+            <p id="text-display">The quick brown fox jumps over the lazy dog.</p>
+            <input type="text" id="text-input" autofocus>
+        </div>
+        <p id="timer">Time: 0s</p>
+    </div>
 
     <script>
         document.addEventListener('keydown', function(event) {
