@@ -18,7 +18,7 @@ def train_user_model(user):
     
     LEARNING_RATE = 0.0008
     BATCH_SIZE = 128
-    EPOCHS = 30
+    EPOCHS = 80
     NUM_WORKERS = 0
     
     criterion = nn.BCELoss()
@@ -39,7 +39,7 @@ def train_user_model(user):
     return
 
 def main():
-    names = ['rocco', 'raymond', 'abhi', 'aiden']
+    names = ['rocco', 'raymond', 'abhi']
     for name in names:
         train_user_model(name)
         print()

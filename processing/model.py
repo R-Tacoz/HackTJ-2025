@@ -10,7 +10,7 @@ class KeyMetAAProfileModel(torch.nn.Module):
         self.model = nn.Sequential(
             nn.Linear(feature_vec_dims, 32), nn.ReLU(),
             nn.Linear(32, 32), nn.ReLU(),
-            # nn.Linear(32, 32), nn.ReLU(),
+            nn.Linear(32, 32), nn.ReLU(),
             nn.Linear(32, 1), nn.Sigmoid(),
         )
         

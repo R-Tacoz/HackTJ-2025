@@ -47,7 +47,7 @@ def store():
     response = request.json.get('data')
     
     test_features = createFeatureVec(response, tensor=True)
-    exportFeatureVec(username, response)
+    # exportFeatureVec(username, response)
     
     return "Worked"
 
