@@ -10,6 +10,15 @@ def home():
 def login():
     return render_template('login.html')
 
+@app.route('/validate_login', methods=['POST'])
+def validate_login():
+    username=request.form.get('username')
+    return render_template('index.html', username=username)
+
+@app.route('/profile/<username>')
+def profile(username):
+    return render_template('profile.html', username=username)
+
 @app.route('/key_press', methods=['POST'])
 def key_press():
     alpha="abcdefghijklmnopqrstuvwxyz"
