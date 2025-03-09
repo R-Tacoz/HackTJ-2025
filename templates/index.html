@@ -21,37 +21,6 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('keydown', function(event) {
-            fetch('/key_press', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ key: event.key })
-            })
-            .then(response => response.json())
-            .then(data => {
-                let curText=document.getElementById('text-input').textContent;
-                if (data.key=="Backspace") {
-                    curText=curText.substring(0, curText.length-1);
-                } else if (data.valid==true) {
-                    curText+=data.key;
-                } else if (data.key=="Enter") {
-                    clearInterval();
-                    window.location.href="/results";
-                }
-                document.getElementById('text-input').textContent = curText;
-            })
-            .catch(error => console.error('Error:', error));
-        });
-
-        let counter = 0;
-        function updateCounter() {
-            counter++;
-            document.getElementById('timer').textContent = "Time: "+counter+"s";
-        }
-        setInterval(updateCounter, 1000);
-    </script>
+    <script src="/static/js/index.js" async defer></script>>
 </body>
 </html>
