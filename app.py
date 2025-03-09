@@ -1,13 +1,15 @@
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from processing.utils import exportFeatureVec
 
 
 app = Flask(__name__)
+username=""
 
 @app.route('/')
 def home():
-    return render_template('index.html', text="What you have typed so far")
+    global username
+    return render_template('index.html', username=username)
 
 @app.route('/login')
 def login():
@@ -15,8 +17,15 @@ def login():
 
 @app.route('/validate_login', methods=['POST'])
 def validate_login():
+    global username
     username=request.form.get('username')
-    return render_template('index.html', username=username)
+    return redirect('/')
+
+@app.route('/logout')
+def logout():
+    global username
+    username=""
+    return redirect('/')
 
 @app.route('/profile/<username>')
 def profile(username):

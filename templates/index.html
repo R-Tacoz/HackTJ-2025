@@ -7,51 +7,51 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form action="/validate_login" method="POST">
-            <!-- Username input -->
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            
-            <!-- Password input -->
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            
-            <!-- Submit button -->
-            <div class="form-group">
-                <button type="submit">Login</button>
-            </div>
-            
-            {% if error %}
-            <p class="error">{{ error }}</p>
+    <div class="login-box">
+        <p>
+            {% if username %}
+                <a href={{"/profile/"+username}}>Profile</a><br>
+                <a href="/logout">Logout</a>
+            {% else %}
+                <h2>Login</h2>
+                <form action="/validate_login" method="POST">
+                    <!-- Username input -->
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    
+                    <!-- Password input -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <!-- Submit button -->
+                    <div class="form-group">
+                        <button type="submit">Login</button>
+                    </div>
+                    
+                    {% if error %}
+                    <p class="error">{{ error }}</p>
+                    {% endif %}
+                </form>
             {% endif %}
-        </form>
+        </p>
     </div>
+    <br>
     
-    <div class="container">
-        <h1>Typing Authentication</h1>
-        <div class="typing-box">
-            <p id="text-display">The quick brown fox jumps over the lazy dog.</p>
-            <p id="text-input" autofocus>
+    {% if username %}
+        <div class="container">
+            <h1>Typing Authentication</h1>
+            <div class="typing-box">
+                <p id="text-display">The quick brown fox jumps over the lazy dog</p>
+                <p id="text-input" autofocus>
+            </div>
+            <p id="timer">Time: 0s</p>
+            <br>
         </div>
-        <p id="timer">Time: 0s</p>
-        <br>
-
-        <div class="login-box">
-            <p>
-                {% if username %}
-                    <a href={{"/profile/"+username}}>Profile</a>
-                {% else %}
-                    <a href="/login">Login</a>
-                {% endif %}
-            </p>
-        </div>
-    </div>
+    {% endif %}
 
     <script src="/static/js/index.js" async defer></script>
 </body>

@@ -63,8 +63,6 @@ function updateCounter() {
 setInterval(updateCounter, 1000);
 
 function exportData() {
-    keystrokeData.push({username: })
-
     const response = fetch("/store", {
         method: "POST",
         headers: {

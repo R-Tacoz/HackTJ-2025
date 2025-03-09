@@ -5,6 +5,7 @@ body {
     color: #e0e0e0;
     font-family: 'Inter', sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
