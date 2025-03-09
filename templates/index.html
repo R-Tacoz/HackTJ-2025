@@ -7,6 +7,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="/validate_login" method="POST">
+            <!-- Username input -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <!-- Password input -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <!-- Submit button -->
+            <div class="form-group">
+                <button type="submit">Login</button>
+            </div>
+            
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+    
     <div class="container">
         <h1>Typing Authentication</h1>
         <div class="typing-box">

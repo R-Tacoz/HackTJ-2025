@@ -1,10 +1,20 @@
 import os, math, time
 
+import csv
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import pandas as pd
 import torch
 from torch.utils.data import DataLoader
+
+def exportFeatureVec(response):
+    new_row = createFeatureVec(response)
+    
+    with open('./processing/data/main.csv', 'a', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(new_row)
+    
+    return
 
 def createFeatureVec(response):
     

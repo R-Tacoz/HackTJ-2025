@@ -1,6 +1,6 @@
 
 from flask import Flask, render_template, request, jsonify
-from processing.utils import createFeatureVec
+from processing.utils import exportFeatureVec
 
 
 app = Flask(__name__)
@@ -22,22 +22,10 @@ def validate_login():
 def profile(username):
     return render_template('profile.html', username=username)
 
-# @app.route('/key_press', methods=['POST'])
-# def key_press():
-#     alpha="abcdefghijklmnopqrstuvwxyz"
-#     alpha+=alpha.upper()+" "
-#     key = request.json.get('key')
-#     response = {
-#         'valid': key in alpha,
-#         'key': key
-#     }
-#     return jsonify(response)
-
 @app.route('/store', methods=['POST'])
 def store():
-    strokedata=request.json.get('data')
-    
-    print("stroke that thang\n", strokedata)
+    response = request.json.get('data')
+    exportFeatureVec(response)
     return "Worked"
 
 @app.route('/results')
