@@ -10,6 +10,12 @@
     <div class="container">
         <h1>Authentication Results</h1>
         
+        {% if passed == True %}
+        <p>Congrats, you got in!</p>
+        {% else %}
+        <p>FAIL. Go away, thief!</p>
+        {% endif %}
+
         <a href="/">Back</a>
     </div>
 </body>
